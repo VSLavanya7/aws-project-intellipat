@@ -1,20 +1,32 @@
-from flask import Flask
+from flask import Flask, render_template, request
 import pymysql
 from config import *
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    try:
-        connection = pymysql.connect(
-            host=customhost,
-            user=customuser,
-            password=custompass,
-            database=customdb,
-            port=customport
-        )
 
+def get_connection():
+    return pymysql.connect(
+        host=customhost,
+        user=customuser,
+        password=custompass,
+        database=customdb,
+        port=customport
+    )
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+@app.route("/getemployee", methods=["POST"])
+def get_employee():
+
+    empid = request.form["empid"]
+
+    try:
+        connection = get_connection()
         cursor = connection.cursor()
 
         cursor.execute("""
@@ -29,18 +41,23 @@ def home():
 
         connection.commit()
 
-        cursor.execute("SELECT COUNT(*) FROM employee")
-        count = cursor.fetchone()[0]
+        cursor.execute(
+            "SELECT * FROM employee WHERE empid=%s",
+            (empid,)
+        )
+
+        employee = cursor.fetchone()
 
         connection.close()
 
-        return f"""
-        <h1>AWS RDS Connected Successfully</h1>
-        <p>Total Employees: {count}</p>
-        """
+        return render_template(
+            "index.html",
+            employee=employee
+        )
 
     except Exception as e:
         return f"Database Error: {e}"
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80)

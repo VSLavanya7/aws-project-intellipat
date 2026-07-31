@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Employee Database</title>
+
+<style>
+
+body {
+    background:#eeeeee;
+    font-family: Arial;
+    text-align:center;
+}
+
+h1 {
+    color:#1476d4;
+    font-size:45px;
+}
+
+.container {
+    width:400px;
+    margin:auto;
+}
+
+label {
+    display:block;
+    font-size:22px;
+    margin-top:25px;
+}
+
+input {
+    width:290px;
+    height:35px;
+    font-size:18px;
+}
+
+button {
+    margin-top:20px;
+    width:280px;
+    height:45px;
+    background:#777;
+    color:white;
+    border:none;
+    font-size:16px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h1>Employee Database</h1>
+
+<div class="container">
+
+<form action="/getemployee" method="POST">
+
+<button>
+GET EMPLOYEE INFORMATION
+</button>
+
+
+<label>Employee ID:</label>
+<input type="number" name="empid" value="{{employee[0] if employee else ''}}">
+
+
+<label>First Name:</label>
+<input type="text" value="{{employee[1] if employee else ''}}">
+
+
+<label>Last Name:</label>
+<input type="text" value="{{employee[2] if employee else ''}}">
+
+
+<label>Primary Skills:</label>
+<input type="text" value="{{employee[3] if employee else ''}}">
+
+
+<label>Location:</label>
+<input type="text" value="{{employee[4] if employee else ''}}">
+
+
+</form>
+
+</div>
+
+
+</body>
+
+</html>
