@@ -37,14 +37,12 @@ def get_employee():
             document_path VARCHAR(255)
         )
         """)
-
         connection.commit()
 
         cursor.execute("SELECT * FROM employee WHERE empid=%s", (empid,))
         employee = cursor.fetchone()
 
         connection.close()
-
         return render_template("index.html", employee=employee)
 
     except Exception as e:
@@ -59,16 +57,20 @@ def update_employee():
     location = request.form["location"]
     file = request.files.get("document")
 
-    document_path = None
-
-    if file and file.filename:
-        os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
-        document_path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
-        file.save(document_path)
-
     try:
         connection = get_connection()
         cursor = connection.cursor()
+
+        cursor.execute("SELECT document_path FROM employee WHERE empid=%s", (empid,))
+        row = cursor.fetchone()
+        existing_path = row[0] if row else None
+
+        document_path = existing_path
+
+        if file and file.filename:
+            os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+            document_path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+            file.save(document_path)
 
         cursor.execute("""
             UPDATE employee
