@@ -1,96 +1,25 @@
-<!DOCTYPE html>
-<html>
+<form action="/getemployee" method="POST" enctype="multipart/form-data">
+    <button type="submit">GET EMPLOYEE INFORMATION</button>
 
-<head>
-<title>Employee Database</title>
+    <label>Employee ID:</label>
+    <input type="number" name="empid" value="{{ employee[0] if employee else '' }}">
 
-<style>
+    <label>First Name:</label>
+    <input type="text" name="firstname" value="{{ employee[1] if employee else '' }}">
 
-body {
-    background:#eeeeee;
-    font-family: Arial;
-    text-align:center;
-}
+    <label>Last Name:</label>
+    <input type="text" name="lastname" value="{{ employee[2] if employee else '' }}">
 
-h1 {
-    color:#1476d4;
-    font-size:45px;
-}
+    <label>Primary Skills:</label>
+    <input type="text" name="skills" value="{{ employee[3] if employee else '' }}">
 
-.container {
-    width:400px;
-    margin:auto;
-}
+    <label>Location:</label>
+    <input type="text" name="location" value="{{ employee[4] if employee else '' }}">
 
-label {
-    display:block;
-    font-size:22px;
-    margin-top:25px;
-}
+    <label for="document">Attach Document:</label>
+    <br>
+    <input type="file" id="document" name="document">
+    <br><br>
 
-input {
-    width:290px;
-    height:35px;
-    font-size:18px;
-}
-
-button {
-    margin-top:20px;
-    width:280px;
-    height:45px;
-    background:#777;
-    color:white;
-    border:none;
-    font-size:16px;
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-<h1>Employee Database</h1>
-
-<div class="container">
-
-<form action="/getemployee" method="POST">
-
-<button>
-GET EMPLOYEE INFORMATION
-</button>
-
-
-<label>Employee ID:</label>
-<input type="number" name="empid" value="{{employee[0] if employee else ''}}">
-
-
-<label>First Name:</label>
-<input type="text" value="{{employee[1] if employee else ''}}">
-
-
-<label>Last Name:</label>
-<input type="text" value="{{employee[2] if employee else ''}}">
-
-
-<label>Primary Skills:</label>
-<input type="text" value="{{employee[3] if employee else ''}}">
-
-
-<label>Location:</label>
-<input type="text" value="{{employee[4] if employee else ''}}">
-
-<label for="document">Attach Document:</label>
-<br>
-<input type="file" id="document" name="document">
-<br><br>
-
+    <button type="submit" formaction="/updateemployee">UPDATE EMPLOYEE</button>
 </form>
-
-</div>
-
-
-</body>
-
-</html>
